@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const links = [
   { href: "/", label: "Home" },
@@ -68,24 +69,27 @@ export default function Navbar() {
           })}
         </ul>
 
-        <a
-          href="#contact"
-          className={`hidden rounded-full px-5 py-2.5 text-sm font-semibold transition-colors lg:inline-block ${
-            solid ? "bg-primary text-white hover:bg-primary-dark" : "bg-white text-ink hover:bg-primary-light"
-          }`}
-        >
-          Contact admissions
-        </a>
+        <div className="flex items-center gap-2">
+          <ThemeToggle className={solid ? "text-ink hover:bg-fog" : "text-white hover:bg-white/10"} />
+          <a
+            href="#contact"
+            className={`hidden rounded-full px-5 py-2.5 text-sm font-semibold transition-colors lg:inline-block ${
+              solid ? "bg-primary text-white hover:bg-primary-dark" : "bg-white text-ink hover:bg-primary-light"
+            }`}
+          >
+            Contact admissions
+          </a>
 
-        <button
-          type="button"
-          onClick={() => setOpen(!open)}
-          aria-expanded={open}
-          aria-label={open ? "Close menu" : "Open menu"}
-          className={`lg:hidden ${solid ? "text-ink" : "text-white"}`}
-        >
-          {open ? <X size={28} /> : <Menu size={28} />}
-        </button>
+          <button
+            type="button"
+            onClick={() => setOpen(!open)}
+            aria-expanded={open}
+            aria-label={open ? "Close menu" : "Open menu"}
+            className={`lg:hidden ${solid ? "text-ink" : "text-white"}`}
+          >
+            {open ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
       </nav>
 
       {open && (

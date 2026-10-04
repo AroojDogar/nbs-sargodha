@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque, Instrument_Sans } from "next/font/google";
 import BackToTop from "@/components/BackToTop";
 import Chatbot from "@/components/Chatbot";
+import ScrollReveal from "@/components/ScrollReveal";
 import { school } from "@/data/school";
 import { siteUrl } from "@/lib/site";
 import "./globals.css";
@@ -63,12 +64,21 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={`${bricolage.variable} ${instrument.variable} antialiased`}>
+    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth" className={`${bricolage.variable} ${instrument.variable} antialiased`}>
+      <head>
+        {/* Apply the saved light/dark choice before the page paints, so there is no flash. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(localStorage.getItem("theme")==="dark")document.documentElement.classList.add("dark")}catch(e){}`,
+          }}
+        />
+      </head>
       <body className="font-sans">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         {children}
         <BackToTop />
         <Chatbot />
+        <ScrollReveal />
       </body>
     </html>
   );

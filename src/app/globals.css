@@ -44,3 +44,46 @@ body {
   html { scroll-behavior: auto; }
   .animate-ticker { animation: none; }
 }
+
+/* ---------- Scroll animations ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.reveal-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Dark mode ----------
+   The toggle adds the class "dark" to <html>. These rules re-colour the light parts of the site;
+   the sections that are already dark (navy) stay as they are. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+html.dark {
+  color-scheme: dark;
+}
+html.dark body {
+  background: #060c1f;
+  color: #e6ebf7;
+}
+.dark .bg-white { background-color: #111b3a; }
+.dark .bg-white\/95 { background-color: rgb(17 27 58 / 0.95); }
+.dark .bg-fog { background-color: #0c1531; }
+.dark .text-ink { color: #e6ebf7; }
+.dark .text-slate { color: #a9b3cc; }
+.dark .text-primary { color: #9fb4ff; }
+.dark .text-accent { color: #f0a184; }
+.dark .bg-primary\/10 { background-color: rgb(159 180 255 / 0.12); }
+.dark .border-ink\/10,
+.dark .border-ink\/15,
+.dark .border-ink\/20,
+.dark .divide-ink\/10 > * { border-color: rgb(255 255 255 / 0.12); }
+.dark .ring-ink\/10 { --tw-ring-color: rgb(255 255 255 / 0.12); }
+.dark .hover\:text-primary:hover,
+.dark .hover\:text-ink:hover,
+.dark .group:hover .group-hover\:text-ink { color: #ffffff; }
+.dark .hover\:bg-fog:hover { background-color: #1a2650; }
+.dark .hover\:bg-primary-light:hover { background-color: #2b4cc2; color: #ffffff; }
+.dark .hover\:border-primary:hover { border-color: #9fb4ff; }

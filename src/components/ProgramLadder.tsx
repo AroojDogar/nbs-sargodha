@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Plus } from "lucide-react";
 import { programs, type ProgramLevel } from "@/data/programs";
+import ProgramCompare from "@/components/ProgramCompare";
 
 const filters: ("All" | ProgramLevel)[] = ["All", "Undergraduate", "Graduate", "Postgraduate"];
 
@@ -162,6 +163,8 @@ export default function ProgramLadder() {
             );
           })}
         </ul>
+
+        <ProgramCompare />
       </div>
     </section>
   );
