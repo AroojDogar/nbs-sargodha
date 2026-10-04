@@ -42,7 +42,7 @@ function Select({ id, value, onChange, label }: { id: string; value: string; onC
         id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="mt-2 w-full rounded-2xl border border-white/20 bg-white/5 px-4 py-3 font-display text-lg font-semibold text-white outline-none focus:border-primary-light [&>option]:text-ink"
+        className="mt-2 w-full rounded-2xl border border-white/20 bg-white/5 px-4 py-3 font-display text-lg font-semibold text-white outline-none focus:border-gold-light [&>option]:text-navy"
       >
         {programs.map((p) => (
           <option key={p.slug} value={p.slug}>{p.title}</option>
@@ -69,7 +69,7 @@ export default function ProgramCompare() {
           type="button"
           onClick={() => { setA(b); setB(a); }}
           aria-label="Swap programs"
-          className="grid size-12 shrink-0 place-items-center self-center rounded-full border border-white/20 hover:bg-white/10 sm:self-end"
+          className="grid size-12 shrink-0 place-items-center self-center rounded-full border border-white/20 hover:border-gold-light hover:text-gold-light sm:self-end"
         >
           <ArrowLeftRight size={18} aria-hidden />
         </button>
@@ -83,7 +83,7 @@ export default function ProgramCompare() {
           </thead>
           <tbody className="divide-y divide-white/10">
             {rows.map((r) => (
-              <tr key={r.label} className={r.label.startsWith("Estimated") ? "text-primary-light" : ""}>
+              <tr key={r.label} className={r.label.startsWith("Estimated") ? "font-semibold text-gold-light" : ""}>
                 <th scope="row" className="w-48 py-4 pr-6 align-top text-sm font-medium text-mist">{r.label}</th>
                 {[pa, pb].map((p, i) => {
                   const v = r.value(p);

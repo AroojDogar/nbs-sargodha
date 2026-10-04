@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Instrument_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, Instrument_Sans } from "next/font/google";
 import BackToTop from "@/components/BackToTop";
 import Chatbot from "@/components/Chatbot";
 import ScrollReveal from "@/components/ScrollReveal";
+import ScrollProgress from "@/components/ScrollProgress";
 import { school } from "@/data/school";
 import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
+const heading = Plus_Jakarta_Sans({
+  variable: "--font-heading",
   subsets: ["latin"],
 });
 
@@ -64,7 +65,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth" className={`${bricolage.variable} ${instrument.variable} antialiased`}>
+    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth" className={`${heading.variable} ${instrument.variable} antialiased`}>
       <head>
         {/* Apply the saved light/dark choice before the page paints, so there is no flash. */}
         <script
@@ -75,6 +76,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="font-sans">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <ScrollProgress />
         {children}
         <BackToTop />
         <Chatbot />

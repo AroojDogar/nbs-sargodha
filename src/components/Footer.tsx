@@ -10,7 +10,7 @@ export default function Footer() {
     <footer id="contact" className="scroll-mt-20">
       <div className="relative overflow-hidden bg-primary text-white">
         <Image
-          src="/images/campus-walk.jpg"
+          src="/images/campus.jpg"
           alt=""
           fill
           sizes="100vw"
@@ -18,7 +18,8 @@ export default function Footer() {
         />
         <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-2 lg:items-center lg:px-10">
           <div>
-            <h2 className="max-w-2xl font-display text-4xl font-semibold tracking-tight sm:text-6xl">
+            <span className="block h-[3px] w-12 rounded bg-gold" aria-hidden />
+            <h2 className="mt-6 max-w-2xl font-display text-4xl font-semibold tracking-tight sm:text-6xl">
               Talk to the admissions office
             </h2>
             <p className="mt-5 max-w-lg text-lg leading-relaxed text-white/85">
@@ -56,7 +57,7 @@ export default function Footer() {
                 href={`https://www.google.com/maps/dir/?api=1&destination=${mapQuery}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark"
+                className="inline-flex items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-navy hover:bg-gold-light"
               >
                 <Navigation size={16} aria-hidden />
                 Get directions
@@ -66,7 +67,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="bg-ink text-mist">
+      <div className="border-t-2 border-gold bg-ink text-mist">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-8 px-6 py-10 lg:px-10">
           <div className="flex items-center gap-4">
             <Image src="/nbs-logo.png" alt="" width={56} height={56} className="size-14 rounded-full bg-white" />

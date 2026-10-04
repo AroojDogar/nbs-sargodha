@@ -1,19 +1,22 @@
 @import "tailwindcss";
 
-/* Palette taken from the University's main building: the lapis-blue dome and the red brick. */
+/* Palette: navy and lapis blue, with gold taken from the NBS logo. */
 @theme {
   --color-ink: #0a1430;
+  --color-navy: #0a1430; /* same as ink, but stays dark in dark mode (text on gold buttons) */
+  --color-gold: #c99a45;
+  --color-gold-light: #e3c27a;
   --color-primary: #1f3fae;
   --color-primary-dark: #142c80;
   --color-primary-light: #c9d6ff;
-  --color-accent: #b4532f;
+  --color-accent: #8a6417; /* deep gold for small text on light backgrounds */
   --color-fog: #f3f5f9;
   --color-slate: #55607a;
   --color-mist: #b7c0d6;
 }
 
 @theme inline {
-  --font-display: var(--font-bricolage);
+  --font-display: var(--font-heading);
   --font-sans: var(--font-instrument);
 }
 
@@ -31,6 +34,40 @@ body {
   outline-offset: 3px;
 }
 
+::selection {
+  background: var(--color-gold-light);
+  color: var(--color-navy);
+}
+
+/* Premium detail: a short gold rule above every section heading */
+main section h2.font-display::before {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 3px;
+  margin-bottom: 1.25rem;
+  border-radius: 2px;
+  background: var(--color-gold);
+}
+
+/* Modern detail: a faint ledger grid and a soft gold glow in the navy sections */
+main section.bg-ink {
+  background-image:
+    radial-gradient(60rem 30rem at 100% 0%, rgb(201 154 69 / 0.1), transparent 60%),
+    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: auto, 56px 56px, 56px 56px;
+}
+
+/* Slow "Ken Burns" zoom on big header photos */
+@keyframes kenburns {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+.animate-kenburns {
+  animation: kenburns 24s ease-out forwards;
+}
+
 @keyframes ticker {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -43,6 +80,7 @@ body {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .animate-ticker { animation: none; }
+  .animate-kenburns { animation: none; }
 }
 
 /* ---------- Scroll animations ---------- */
@@ -74,7 +112,7 @@ html.dark body {
 .dark .text-ink { color: #e6ebf7; }
 .dark .text-slate { color: #a9b3cc; }
 .dark .text-primary { color: #9fb4ff; }
-.dark .text-accent { color: #f0a184; }
+.dark .text-accent { color: #e3c27a; }
 .dark .bg-primary\/10 { background-color: rgb(159 180 255 / 0.12); }
 .dark .border-ink\/10,
 .dark .border-ink\/15,

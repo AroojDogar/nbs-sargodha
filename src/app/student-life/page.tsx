@@ -8,7 +8,7 @@ import { activities, clubs, motto, studentBody } from "@/data/studentLife";
 export const metadata: Metadata = { title: "Student life | Noon Business School" };
 
 const photos = [
-  { src: "/images/students.jpeg", alt: "Students on campus" },
+  { src: "/images/student.jpeg", alt: "Students on campus" },
   { src: "/images/sport.jpeg", alt: "A student competing at the sports gala" },
   { src: "/images/research-arena.jpg", alt: "Faculty at a university event" },
 ];

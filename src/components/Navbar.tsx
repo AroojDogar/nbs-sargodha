@@ -74,7 +74,7 @@ export default function Navbar() {
           <a
             href="#contact"
             className={`hidden rounded-full px-5 py-2.5 text-sm font-semibold transition-colors lg:inline-block ${
-              solid ? "bg-primary text-white hover:bg-primary-dark" : "bg-white text-ink hover:bg-primary-light"
+              solid ? "bg-gold text-navy hover:bg-gold-light" : "bg-gold text-navy hover:bg-gold-light"
             }`}
           >
             Contact admissions

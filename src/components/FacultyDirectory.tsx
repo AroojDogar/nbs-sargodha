@@ -60,7 +60,7 @@ export default function FacultyDirectory() {
       ) : (
         <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {shown.map((f) => (
-            <li key={f.name} className="overflow-hidden rounded-3xl bg-white">
+            <li key={f.name} className="overflow-hidden rounded-3xl bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xl">
               <Avatar name={f.name} photo={f.photo} className="aspect-[4/5] w-full" />
               <div className="p-5">
                 <p className="font-display text-lg font-semibold leading-snug">{f.name}</p>

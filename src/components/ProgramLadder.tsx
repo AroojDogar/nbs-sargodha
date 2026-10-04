@@ -39,10 +39,10 @@ export default function ProgramLadder() {
                   aria-selected={active}
                   onClick={() => setFilter(f)}
                   className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                    active ? "bg-white text-ink" : "border border-white/20 text-mist hover:border-white/50 hover:text-white"
+                    active ? "bg-gold text-navy" : "border border-white/20 text-mist hover:border-gold-light hover:text-white"
                   }`}
                 >
-                  {f} <span className={active ? "text-primary" : "text-white/40"}>{count}</span>
+                  {f} <span className={active ? "text-navy/60" : "text-white/40"}>{count}</span>
                 </button>
               );
             })}
@@ -59,7 +59,7 @@ export default function ProgramLadder() {
                   aria-expanded={open}
                   className="group grid w-full grid-cols-[1fr_auto] items-center gap-x-6 gap-y-2 py-7 text-left md:grid-cols-[1fr_8rem_12rem_7rem_auto]"
                 >
-                  <span className="font-display text-xl font-medium transition-colors group-hover:text-primary-light sm:text-2xl">
+                  <span className="font-display text-xl font-medium transition-colors group-hover:text-gold-light sm:text-2xl">
                     {p.title}
                   </span>
                   <span className="hidden text-mist md:block">{p.duration}</span>
@@ -75,7 +75,7 @@ export default function ProgramLadder() {
                   </span>
                   <span
                     className={`row-span-2 grid size-10 place-items-center rounded-full border border-white/20 transition-all md:row-span-1 ${
-                      open ? "rotate-45 bg-white text-ink" : "text-white"
+                      open ? "rotate-45 border-gold bg-gold text-navy" : "text-white group-hover:border-gold-light"
                     }`}
                     aria-hidden
                   >
@@ -97,19 +97,19 @@ export default function ProgramLadder() {
                     >
                       <div className="grid gap-8 pb-10 md:grid-cols-3">
                         <div className="md:col-span-2">
-                          <h3 className="text-sm font-semibold text-primary-light">Eligibility</h3>
+                          <h3 className="text-sm font-semibold text-gold-light">Eligibility</h3>
                           <p className="mt-2 max-w-prose leading-relaxed text-white/80">{p.eligibility}</p>
 
                           {p.specializations && (
                             <>
-                              <h3 className="mt-6 text-sm font-semibold text-primary-light">Specializations</h3>
+                              <h3 className="mt-6 text-sm font-semibold text-gold-light">Specializations</h3>
                               <p className="mt-2 text-white/80">{p.specializations.join(", ")}</p>
                             </>
                           )}
 
                           {p.highlights && (
                             <>
-                              <h3 className="mt-6 text-sm font-semibold text-primary-light">Courses you will take</h3>
+                              <h3 className="mt-6 text-sm font-semibold text-gold-light">Courses you will take</h3>
                               <ul className="mt-3 flex flex-wrap gap-2">
                                 {p.highlights.map((h) => (
                                   <li key={h} className="rounded-full bg-white/10 px-3 py-1 text-sm">
