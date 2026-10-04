@@ -1,44 +1,68 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Navigation, Phone } from "lucide-react";
 import { school } from "@/data/school";
+
+const mapQuery = encodeURIComponent("University of Sargodha, Sargodha, Pakistan");
 
 export default function Footer() {
   return (
     <footer id="contact" className="scroll-mt-20">
       <div className="relative overflow-hidden bg-primary text-white">
         <Image
-          src="/images/aboutt.jpeg"
+          src="/images/campus-walk.jpg"
           alt=""
           fill
           sizes="100vw"
-          className="object-cover opacity-25 mix-blend-luminosity"
+          className="object-cover opacity-20 mix-blend-luminosity"
         />
-        <div className="relative mx-auto grid max-w-7xl gap-10 px-6 py-24 lg:grid-cols-[3fr_2fr] lg:items-end lg:px-10">
+        <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-2 lg:items-center lg:px-10">
           <div>
             <h2 className="max-w-2xl font-display text-4xl font-semibold tracking-tight sm:text-6xl">
               Talk to the admissions office
             </h2>
             <p className="mt-5 max-w-lg text-lg leading-relaxed text-white/85">
-              Questions about eligibility, fees or admission tests? Reach the school directly.
+              Questions about eligibility, fees or admission tests? Reach the school directly or visit us on campus.
             </p>
+            <ul className="mt-10 space-y-5 text-lg">
+              <li className="flex gap-3">
+                <Mail className="mt-1 shrink-0" size={20} aria-hidden />
+                <a href={`mailto:${school.contact.email}`} className="underline-offset-4 hover:underline">
+                  {school.contact.email}
+                </a>
+              </li>
+              <li className="flex gap-3">
+                <Phone className="mt-1 shrink-0" size={20} aria-hidden />
+                <span>{school.contact.phone}</span>
+              </li>
+              <li className="flex gap-3">
+                <MapPin className="mt-1 shrink-0" size={20} aria-hidden />
+                <span>{school.contact.location}</span>
+              </li>
+            </ul>
           </div>
-          <ul className="space-y-5 text-lg">
-            <li className="flex gap-3">
-              <Mail className="mt-1 shrink-0" size={20} aria-hidden />
-              <a href={`mailto:${school.contact.email}`} className="underline-offset-4 hover:underline">
-                {school.contact.email}
+
+          <div className="overflow-hidden rounded-3xl bg-white shadow-2xl">
+            <iframe
+              title="Map showing the University of Sargodha"
+              src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="block aspect-[4/3] w-full border-0"
+            />
+            <div className="flex flex-wrap items-center justify-between gap-4 p-5 text-ink">
+              <p className="text-sm text-slate">NBS is in the Ibn-e-Rushd Block on the main campus.</p>
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${mapQuery}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark"
+              >
+                <Navigation size={16} aria-hidden />
+                Get directions
               </a>
-            </li>
-            <li className="flex gap-3">
-              <Phone className="mt-1 shrink-0" size={20} aria-hidden />
-              <span>{school.contact.phone}</span>
-            </li>
-            <li className="flex gap-3">
-              <MapPin className="mt-1 shrink-0" size={20} aria-hidden />
-              <span>{school.contact.location}</span>
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
       </div>
 
