@@ -1,12 +1,10 @@
 -- NBS online results: database setup for Supabase.
--- Run once in Supabase: SQL Editor > New query > paste everything > Run.
--- (schema.sql for attendance should already have been run; this file is separate.)
+-- Run in Supabase: SQL Editor > New query > paste everything > Run.
+-- Safe to run again: it only adds what is missing and updates the lookup function.
 --
 -- Who can do what:
 --   * Only accounts listed in public.registrars (the Deputy Registrar) can upload, publish or delete results.
---   * Students see only PUBLISHED results, and only by giving their roll number AND the last 4 digits of their CNIC.
---   * Full CNIC numbers are never stored: only the last 4 digits are kept, to check the student.
---   * After 10 wrong CNIC tries for one roll number in an hour, that roll number is locked for the hour.
+--   * Students see only PUBLISHED results, by Student ID.
 
 create table if not exists public.registrars (
   user_id uuid primary key references auth.users on delete cascade,
@@ -15,35 +13,35 @@ create table if not exists public.registrars (
 
 create table if not exists public.result_sheets (
   id uuid primary key default gen_random_uuid(),
-  title text not null,                 -- e.g. "BBA 3rd Semester"
-  session text not null,               -- e.g. "Fall 2026"
-  columns jsonb not null default '[]', -- column names in sheet order (roll number and CNIC excluded)
+  title text not null,                 -- program, e.g. "BS-Commerce"
+  session text not null,               -- e.g. "2024-2028"
+  columns jsonb not null default '[]', -- sheet layout: subjects (code, name, credit hours) and summary columns
   published boolean not null default false,
   published_at timestamptz,
   created_by uuid default auth.uid() references auth.users on delete set null,
   created_at timestamptz not null default now()
 );
+alter table public.result_sheets add column if not exists semester text;      -- e.g. "IV"
+alter table public.result_sheets add column if not exists declared_on date;   -- result declaration date
 
 create table if not exists public.results (
   sheet_id uuid not null references public.result_sheets on delete cascade,
-  roll_no text not null,
-  cnic_last4 text not null check (cnic_last4 ~ '^[0-9]{4}$'),
-  data jsonb not null,                 -- { "Name": "...", "Marketing": "78", "GPA": "3.40", ... }
+  roll_no text not null,               -- Student ID
+  data jsonb not null,                 -- { name, marks: { CODE: [marks, gpt, grade] }, summary: { "CGPA 4th": "3.99", ... } }
   primary key (sheet_id, roll_no)
 );
+-- Earlier versions asked for a CNIC; it is no longer used.
+alter table public.results drop column if exists cnic_last4;
+drop table if exists public.result_lookup_failures;
+drop function if exists public.student_results(text, text);
+-- Remove test sheets saved in the earlier (simple) format.
+delete from public.result_sheets where jsonb_typeof(columns) <> 'object';
 
-create index if not exists results_roll on public.results (lower(trim(roll_no)));
-
-create table if not exists public.result_lookup_failures (
-  roll_no text not null,
-  at timestamptz not null default now()
-);
-create index if not exists result_lookup_failures_roll on public.result_lookup_failures (roll_no, at);
+create index if not exists results_roll on public.results (lower(replace(roll_no, ' ', '')));
 
 alter table public.registrars enable row level security;
 alter table public.result_sheets enable row level security;
 alter table public.results enable row level security;
-alter table public.result_lookup_failures enable row level security; -- no policies: only the function below uses it
 
 create or replace function public.is_registrar()
 returns boolean
@@ -67,55 +65,29 @@ drop policy if exists "registrars manage results" on public.results;
 create policy "registrars manage results" on public.results
   for all to authenticated using (public.is_registrar()) with check (public.is_registrar());
 
--- Student lookup. Returns every published sheet that has this roll number with a matching CNIC.
-create or replace function public.student_results(p_roll text, p_cnic4 text)
-returns table (title text, session text, published_at timestamptz, columns jsonb, data jsonb)
-language plpgsql
-volatile
+-- Student lookup by Student ID (spaces and capitals ignored). Only published sheets are returned.
+create or replace function public.student_results(p_roll text)
+returns table (title text, session text, semester text, declared_on date, published_at timestamptz, layout jsonb, data jsonb)
+language sql
+stable
 security definer
 set search_path = public
 as $$
-declare
-  roll text := lower(trim(p_roll));
-  n int;
-begin
-  if length(roll) < 3 or p_cnic4 !~ '^[0-9]{4}$' then
-    return;
-  end if;
-
-  if (select count(*) from public.result_lookup_failures f where f.roll_no = roll and f.at > now() - interval '1 hour') >= 10 then
-    raise exception 'Too many wrong attempts. Please try again in an hour.';
-  end if;
-
-  delete from public.result_lookup_failures f where f.at < now() - interval '1 day';
-
-  return query
-    select s.title, s.session, s.published_at, s.columns, r.data
-    from public.results r
-    join public.result_sheets s on s.id = r.sheet_id
-    where s.published
-      and lower(trim(r.roll_no)) = roll
-      and r.cnic_last4 = p_cnic4
-    order by s.published_at desc;
-
-  get diagnostics n = row_count;
-  if n = 0 and exists (
-    select 1 from public.results r join public.result_sheets s on s.id = r.sheet_id
-    where s.published and lower(trim(r.roll_no)) = roll
-  ) then
-    insert into public.result_lookup_failures (roll_no) values (roll);
-  end if;
-end;
+  select s.title, s.session, s.semester, s.declared_on, s.published_at, s.columns, r.data
+  from public.results r
+  join public.result_sheets s on s.id = r.sheet_id
+  where s.published
+    and length(trim(p_roll)) >= 5
+    and lower(replace(r.roll_no, ' ', '')) = lower(replace(p_roll, ' ', ''))
+  order by s.declared_on desc nulls last, s.published_at desc;
 $$;
 
-revoke all on function public.student_results(text, text) from public;
-grant execute on function public.student_results(text, text) to anon, authenticated;
+revoke all on function public.student_results(text) from public;
+grant execute on function public.student_results(text) to anon, authenticated;
 revoke all on function public.is_registrar() from public;
 grant execute on function public.is_registrar() to authenticated;
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- AFTER running the above: make the Deputy Registrar's account a registrar.
--- 1. Create their user in Authentication > Users (Add user, Auto Confirm).
--- 2. Run this line in a NEW query, with their email:
+-- To let someone upload results, create their user in Authentication > Users, then run (with their email):
 --
 --    insert into public.registrars (user_id) select id from auth.users where email = 'deputy.registrar@example.com';

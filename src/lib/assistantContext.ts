@@ -29,7 +29,7 @@ const pages = [
   "[Handbook](/handbook) for attendance, grading, promotion, scholarships, uniform and conduct",
   "[Events](/events) for achievements, partnerships and activities",
   "[Attendance](/attendance) for the online attendance portal (teachers mark attendance, students check theirs by roll number)",
-  "[Results](/results) to check a published semester result with roll number and the last 4 digits of the CNIC",
+  "[Results](/results) to check a published semester result with the Student ID",
   "[Contact](#contact) for email, phone and map",
 ];
 

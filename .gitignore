@@ -40,3 +40,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Real result sheets and other private documents dropped in the project folder
+/*.pdf
+/*.xls
+/*.xlsx

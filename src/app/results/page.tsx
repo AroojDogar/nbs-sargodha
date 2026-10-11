@@ -7,7 +7,7 @@ import StudentResults from "@/components/results/StudentResults";
 
 export const metadata: Metadata = {
   title: "Results | Noon Business School",
-  description: "Check your NBS semester result online with your roll number and CNIC.",
+  description: "Check your NBS semester result online with your Student ID.",
 };
 
 export default function ResultsPage() {
@@ -17,7 +17,7 @@ export default function ResultsPage() {
       <main>
         <PageHeader
           title="Results"
-          intro="Semester results are published here by the Deputy Registrar's office. Enter your roll number and the last 4 digits of your CNIC."
+          intro="Semester results are published here by the Deputy Registrar's office. Enter your Student ID to see your consolidated result."
           image="/images/graduates.jpg"
           className="print:hidden"
         />
