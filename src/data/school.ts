@@ -74,6 +74,8 @@ export const tickerStats = [
   { value: "12", label: "Degree Programs" },
   { value: "50", label: "Faculty Members" },
   { value: "BBA → PhD", label: "Full Academic Ladder" },
+  { value: "NBEAC", label: "Accredited Business Programs" },
+  { value: "6", label: "Industry & Academic MoUs" },
   { value: "1929", label: "Legacy Since" },
   { value: "25,000+", label: "University Students" },
   { value: "6", label: "Countries in Global Linkages" },

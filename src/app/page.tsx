@@ -10,6 +10,8 @@ import { school, facultyOfSocialSciences, university } from "@/data/school";
 import { faculty, director, type Rank } from "@/data/faculty";
 import { programs } from "@/data/programs";
 import { clubs } from "@/data/studentLife";
+import { eventsPortal, milestones } from "@/data/events";
+import { ArrowUpRight } from "lucide-react";
 
 const reasons = [
   {
@@ -68,7 +70,7 @@ export default function Home() {
                 institutions in {university.globalLinkages.join(", ")}.
               </p>
             </div>
-                        <div className="rounded-3xl border border-ink/10 bg-fog p-8 lg:p-10">
+            <div className="rounded-3xl border border-ink/10 bg-fog p-8 lg:p-10">
               <div className="flex items-center gap-4">
                 <Image src="/nbs-logo.png" alt="" width={64} height={64} className="size-16 rounded-full bg-white" />
                 <p className="font-display text-2xl font-semibold">NBS at a glance</p>
@@ -175,6 +177,42 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Events and achievements */}
+        <section id="events" className="scroll-mt-20 bg-ink py-24 text-white lg:py-32">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <div className="flex flex-wrap items-end justify-between gap-6">
+              <div>
+                <h2 className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">Events and achievements</h2>
+                <p className="mt-5 max-w-2xl text-lg leading-relaxed text-mist">
+                  International conferences, NBEAC accreditation, research grants and new industry partnerships.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <Link href="/events" className="rounded-full bg-gold px-6 py-3 font-semibold text-navy hover:bg-gold-light">
+                  See all highlights
+                </Link>
+                <a
+                  href={eventsPortal.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 font-semibold hover:border-gold-light hover:text-gold-light"
+                >
+                  Events portal <ArrowUpRight size={18} aria-hidden />
+                </a>
+              </div>
+            </div>
+            <ul className="mt-12 grid gap-px overflow-hidden rounded-3xl bg-white/15 sm:grid-cols-2 lg:grid-cols-4">
+              {milestones.slice(0, 4).map((m) => (
+                <li key={m.title} className="flex flex-col bg-ink p-8">
+                  <p className="text-xs font-semibold tracking-wide text-gold-light uppercase">{m.category}</p>
+                  <p className="mt-4 font-display text-xl leading-snug font-semibold">{m.title}</p>
+                  <p className="mt-auto pt-6 text-sm text-mist">{m.date}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
         {/* Campus life */}
         <section id="life" className="scroll-mt-20 py-24 lg:py-32">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
@@ -210,8 +248,8 @@ export default function Home() {
             </div>
           </div>
         </section>
-           </main>
-           <Footer />
+      </main>
+      <Footer />
     </>
   );
 }

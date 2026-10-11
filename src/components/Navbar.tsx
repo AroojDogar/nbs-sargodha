@@ -13,6 +13,7 @@ const links = [
   { href: "/#programs", label: "Programs" },
   { href: "/faculty", label: "Faculty" },
   { href: "/student-life", label: "Student life" },
+  { href: "/events", label: "Events" },
   { href: "/handbook", label: "Handbook" },
 ];
 
@@ -39,13 +40,13 @@ export default function Navbar() {
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3 lg:px-10">
         <Link href="/" className="flex items-center gap-3">
           <Image src="/nbs-logo.png" alt="" width={48} height={48} className="size-12 rounded-full bg-white" priority />
-          <span className={`leading-tight transition-colors ${solid ? "text-ink" : "text-white"}`}>
+          <span className={`leading-tight whitespace-nowrap transition-colors ${solid ? "text-ink" : "text-white"}`}>
             <span className="block font-display text-base font-semibold">Noon Business School</span>
             <span className={`block text-xs ${solid ? "text-slate" : "text-white/70"}`}>University of Sargodha</span>
           </span>
         </Link>
 
-        <ul className="hidden items-center gap-7 lg:flex">
+        <ul className="hidden items-center gap-5 whitespace-nowrap lg:flex xl:gap-7">
           {links.map((l) => {
             const active = pathname === l.href;
             const cls = `text-sm font-medium transition-colors ${
@@ -73,7 +74,7 @@ export default function Navbar() {
           <ThemeToggle className={solid ? "text-ink hover:bg-fog" : "text-white hover:bg-white/10"} />
           <a
             href="#contact"
-            className={`hidden rounded-full px-5 py-2.5 text-sm font-semibold transition-colors lg:inline-block ${
+            className={`hidden rounded-full px-5 py-2.5 text-sm font-semibold whitespace-nowrap transition-colors xl:inline-block ${
               solid ? "bg-gold text-navy hover:bg-gold-light" : "bg-gold text-navy hover:bg-gold-light"
             }`}
           >

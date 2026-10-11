@@ -1,11 +1,13 @@
-// The NBS Assistant's "brain". It answers only from the site's own data files
-// (prospectus + orientation), so it never makes up fees, rules or names.
+// The NBS Assistant's offline "brain", used when the Gemini AI (app/api/chat) is not set up or
+// not reachable. It answers only from the site's own data files (prospectus + orientation),
+// so it never makes up fees, rules or names.
 
 import { school, facultyOfSocialSciences } from "@/data/school";
 import { programs, type Program } from "@/data/programs";
 import { faculty, director, adminStaff } from "@/data/faculty";
 import { activities, clubs } from "@/data/studentLife";
 import { evaluation, gradeFor, promotion, scholarships, uniform } from "@/data/handbook";
+import { milestones } from "@/data/events";
 
 export interface Reply {
   text: string;
@@ -166,8 +168,11 @@ export function answer(input: string): Reply {
   if (has(q, ["club", "societ"]))
     return { text: `NBS has ${clubs.length} clubs: ${clubs.join(", ")}. Each has a President, Vice President and General Secretary.`, link: { href: "/student-life", label: "Student life" } };
 
-  if (has(q, ["event", "activit", "gala", "forum", "dinner"]))
-    return { text: `Events at NBS include: ${activities.join(", ")}.`, link: { href: "/student-life", label: "Student life" } };
+  if (has(q, ["event", "activit", "gala", "forum", "dinner", "conference", "achievement", "mou", "partner", "accredit", "nbeac"]))
+    return {
+      text: `Recent highlights:\n${milestones.map((m) => `• ${m.title} (${m.date})`).join("\n")}\n\nEvery year NBS also holds: ${activities.join(", ")}.`,
+      link: { href: "/events", label: "Events and achievements" },
+    };
 
   if (has(q, ["contact", "email", "phone", "number", "call", "address", "where", "location", "located", "office", "map"]))
     return { text: `Email: ${school.contact.email}\nPhone: ${school.contact.phone}\nAddress: ${school.contact.location}`, link: { href: "#contact", label: "Map and directions" } };
@@ -184,4 +189,4 @@ export function answer(input: string): Reply {
   };
 }
 
-export const suggestions = ["BBA fee", "Admission marks", "Weekend programs", "Attendance rule", "Scholarships", "Contact NBS"];
+export const suggestions = ["BBA fee", "Admission marks", "Weekend programs", "Attendance rule", "Scholarships", "Latest events", "Contact NBS"];

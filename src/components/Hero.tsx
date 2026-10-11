@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
+import { BadgeCheck } from "lucide-react";
 
 const path = ["BBA", "BS", "MBA", "MS", "PhD"];
 const headline = "From your first BBA class to your PhD defence.";
@@ -24,10 +25,19 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/40" />
 
       <div className="relative mx-auto w-full max-w-7xl px-6 pt-40 pb-12 lg:px-10 lg:pb-16">
-        <p className="flex items-center gap-3 text-sm font-medium text-gold-light">
-          <span className="h-px w-10 bg-gold" aria-hidden />
-          Faculty of Social Sciences, University of Sargodha
-        </p>
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+          <p className="flex items-center gap-3 text-sm font-medium text-gold-light">
+            <span className="h-px w-10 bg-gold" aria-hidden />
+            Faculty of Social Sciences, University of Sargodha
+          </p>
+          <a
+            href="/events"
+            className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-3 py-1 text-xs font-semibold text-gold-light backdrop-blur-sm hover:bg-gold/20"
+          >
+            <BadgeCheck size={14} aria-hidden />
+            NBEAC accredited
+          </a>
+        </div>
         <h1 className="mt-6 max-w-4xl font-display text-5xl leading-[1.05] font-semibold tracking-tight sm:text-6xl lg:text-7xl xl:text-[5.5rem]">
           {words.map((w, i) => (
             <motion.span

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Mail, MapPin, Navigation, Phone } from "lucide-react";
 import { school } from "@/data/school";
+import { eventsPortal } from "@/data/events";
 
 const mapQuery = encodeURIComponent("University of Sargodha, Sargodha, Pakistan");
 
@@ -80,7 +81,9 @@ export default function Footer() {
             <li><Link href="/#programs" className="hover:text-white">Programs</Link></li>
             <li><Link href="/faculty" className="hover:text-white">Faculty</Link></li>
             <li><Link href="/student-life" className="hover:text-white">Student life</Link></li>
+            <li><Link href="/events" className="hover:text-white">Events</Link></li>
             <li><Link href="/handbook" className="hover:text-white">Handbook</Link></li>
+            <li><a href={eventsPortal.url} target="_blank" rel="noopener noreferrer" className="hover:text-white">Events portal</a></li>
             <li><a href="https://www.su.edu.pk" className="hover:text-white">University website</a></li>
           </ul>
         </div>
