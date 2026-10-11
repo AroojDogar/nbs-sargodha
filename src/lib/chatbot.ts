@@ -2,7 +2,7 @@
 // not reachable. It answers only from the site's own data files (prospectus + orientation),
 // so it never makes up fees, rules or names.
 
-import { school, facultyOfSocialSciences } from "@/data/school";
+import { school, facultyOfSocialSciences, university } from "@/data/school";
 import { programs, type Program } from "@/data/programs";
 import { faculty, director, adminStaff } from "@/data/faculty";
 import { activities, clubs } from "@/data/studentLife";
@@ -120,6 +120,8 @@ export function answer(input: string): Reply {
 
   if (has(q, ["director", "head of", "hod"]))
     return { text: `The Director of NBS is ${director.name}, ${director.designation}, ${director.qualification}.`, link: { href: "/faculty", label: "Meet the faculty" } };
+  if (has(q, ["vc", "vice chancellor", "vice-chancellor", "chancellor"]))
+    return { text: `The Vice Chancellor of the ${university.name} is ${university.viceChancellor.name} (since ${university.viceChancellor.since}).` };
   if (has(q, ["dean"]))
     return { text: `The Dean of the Faculty of Social Sciences is ${facultyOfSocialSciences.dean.name}.` };
 

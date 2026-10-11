@@ -14,13 +14,14 @@ const welcome: Message = {
 
 // Tiny, safe markdown: **bold**, [links](/page) and "- " / "• " bullets.
 function inline(text: string, close: () => void): ReactNode[] {
-  const parts = text.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)\s]+\))/g);
+  const parts = text.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\(\s*[^)\s]+\s*\))/g);
   return parts.map((part, i) => {
     const bold = part.match(/^\*\*([^*]+)\*\*$/);
     if (bold) return <strong key={i} className="font-semibold">{bold[1]}</strong>;
-    const link = part.match(/^\[([^\]]+)\]\(([^)\s]+)\)$/);
+    const link = part.match(/^\[([^\]]+)\]\(\s*([^)\s]+)\s*\)$/);
     if (link) {
       const href = link[2];
+      if (!/[a-z]/i.test(link[1])) return null; // e.g. "[/](/)": no readable label
       const external = /^https?:\/\//.test(href);
       if (!external && !href.startsWith("/") && !href.startsWith("#")) return link[1];
       return (

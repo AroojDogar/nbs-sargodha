@@ -44,6 +44,8 @@ export const university = {
   name: "University of Sargodha",
   journeyBegan: 1929, // De'Montmorency College, later Government College
   charter: 2002,
+  // Appointed September 2026 for a four-year term (succeeded Prof. Dr. Qaisar Abbas, VC 2022–2026).
+  viceChancellor: { name: "Prof. Dr. Tasawar Hayat", since: "September 2026" },
   students: "25,000+",
   facultyMembers: "600+",
   phds: "350+",
