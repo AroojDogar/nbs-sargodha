@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Ticker from "@/components/Ticker";
 import ProgramLadder from "@/components/ProgramLadder";
+import AcademicPathSection from "@/components/AcademicPathSection";
 import Footer from "@/components/Footer";
 import { school, facultyOfSocialSciences, university } from "@/data/school";
 import { faculty, director, type Rank } from "@/data/faculty";
@@ -93,6 +94,8 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <AcademicPathSection />
 
         <ProgramLadder />
 

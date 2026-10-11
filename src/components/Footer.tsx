@@ -83,6 +83,7 @@ export default function Footer() {
             <li><Link href="/student-life" className="hover:text-white">Student life</Link></li>
             <li><Link href="/events" className="hover:text-white">Events</Link></li>
             <li><Link href="/handbook" className="hover:text-white">Handbook</Link></li>
+            <li><Link href="/attendance" className="hover:text-white">Attendance</Link></li>
             <li><a href={eventsPortal.url} target="_blank" rel="noopener noreferrer" className="hover:text-white">Events portal</a></li>
             <li><a href="https://www.su.edu.pk" className="hover:text-white">University website</a></li>
           </ul>

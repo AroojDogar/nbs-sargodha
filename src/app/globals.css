@@ -125,3 +125,8 @@ html.dark body {
 .dark .hover\:bg-fog:hover { background-color: #1a2650; }
 .dark .hover\:bg-primary-light:hover { background-color: #2b4cc2; color: #ffffff; }
 .dark .hover\:border-primary:hover { border-color: #9fb4ff; }
+
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}

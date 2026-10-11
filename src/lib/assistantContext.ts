@@ -28,6 +28,7 @@ const pages = [
   "[Student life](/student-life) for clubs and student representatives",
   "[Handbook](/handbook) for attendance, grading, promotion, scholarships, uniform and conduct",
   "[Events](/events) for achievements, partnerships and activities",
+  "[Attendance](/attendance) for the online attendance portal (teachers mark attendance, students check theirs by roll number)",
   "[Contact](#contact) for email, phone and map",
 ];
 

@@ -14,6 +14,7 @@ const links = [
   { href: "/faculty", label: "Faculty" },
   { href: "/student-life", label: "Student life" },
   { href: "/events", label: "Events" },
+  { href: "/attendance", label: "Attendance" },
   { href: "/handbook", label: "Handbook" },
 ];
 
