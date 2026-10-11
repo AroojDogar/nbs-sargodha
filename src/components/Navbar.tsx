@@ -15,6 +15,7 @@ const links = [
   { href: "/student-life", label: "Student life" },
   { href: "/events", label: "Events" },
   { href: "/attendance", label: "Attendance" },
+  { href: "/results", label: "Results" },
   { href: "/handbook", label: "Handbook" },
 ];
 
@@ -47,7 +48,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-        <ul className="hidden items-center gap-5 whitespace-nowrap lg:flex xl:gap-7">
+        <ul className="hidden items-center gap-5 whitespace-nowrap xl:flex 2xl:gap-7">
           {links.map((l) => {
             const active = pathname === l.href;
             const cls = `text-sm font-medium transition-colors ${
@@ -75,7 +76,7 @@ export default function Navbar() {
           <ThemeToggle className={solid ? "text-ink hover:bg-fog" : "text-white hover:bg-white/10"} />
           <a
             href="#contact"
-            className={`hidden rounded-full px-5 py-2.5 text-sm font-semibold whitespace-nowrap transition-colors xl:inline-block ${
+            className={`hidden rounded-full px-5 py-2.5 text-sm font-semibold whitespace-nowrap transition-colors 2xl:inline-block ${
               solid ? "bg-gold text-navy hover:bg-gold-light" : "bg-gold text-navy hover:bg-gold-light"
             }`}
           >
@@ -87,7 +88,7 @@ export default function Navbar() {
             onClick={() => setOpen(!open)}
             aria-expanded={open}
             aria-label={open ? "Close menu" : "Open menu"}
-            className={`lg:hidden ${solid ? "text-ink" : "text-white"}`}
+            className={`xl:hidden ${solid ? "text-ink" : "text-white"}`}
           >
             {open ? <X size={28} /> : <Menu size={28} />}
           </button>
@@ -95,7 +96,7 @@ export default function Navbar() {
       </nav>
 
       {open && (
-        <ul className="space-y-1 border-t border-ink/10 bg-white px-4 pt-2 pb-6 lg:hidden">
+        <ul className="space-y-1 border-t border-ink/10 bg-white px-4 pt-2 pb-6 xl:hidden">
           {[...links, { href: "#contact", label: "Contact admissions" }].map((l) => (
             <li key={l.label}>
               <a

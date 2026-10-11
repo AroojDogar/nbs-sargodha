@@ -21,7 +21,7 @@ export default function StudentLifePage() {
         <PageHeader
           title="Student life"
           intro="Clubs, events and student leadership at NBS, built around four words: learn, participate, develop and lead."
-          image="/images/students.jpg"
+          image="/images/student.jpeg"
         />
 
         {/* Motto */}

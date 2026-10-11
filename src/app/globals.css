@@ -130,3 +130,11 @@ html.dark body {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: none; }
 }
+
+/* Printing (e.g. a student's result card): leave out navigation, floating buttons and the footer. */
+@media print {
+  .fixed,
+  footer#contact {
+    display: none !important;
+  }
+}

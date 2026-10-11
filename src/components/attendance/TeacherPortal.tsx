@@ -9,7 +9,7 @@ import ClassWorkspace from "@/components/attendance/ClassWorkspace";
 
 const input = "w-full rounded-xl border border-ink/15 bg-white px-4 py-3 outline-none focus:border-primary";
 
-function NotConfigured() {
+export function NotConfigured() {
   return (
     <div className="mx-auto max-w-xl rounded-3xl bg-fog p-8 text-center">
       <h2 className="font-display text-2xl font-semibold">Portal not set up yet</h2>
@@ -20,7 +20,7 @@ function NotConfigured() {
   );
 }
 
-function SignIn() {
+export function SignIn({ title = "Teacher sign in" }: { title?: string }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -37,7 +37,7 @@ function SignIn() {
 
   return (
     <form onSubmit={submit} className="mx-auto max-w-md rounded-3xl border border-ink/10 bg-white p-8 shadow-sm">
-      <h2 className="font-display text-2xl font-semibold">Teacher sign in</h2>
+      <h2 className="font-display text-2xl font-semibold">{title}</h2>
       <p className="mt-2 text-sm text-slate">Use the email and password given to you by the NBS office.</p>
       <label className="mt-6 block text-sm font-medium" htmlFor="t-email">
         Email
