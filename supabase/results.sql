@@ -65,15 +65,22 @@ drop policy if exists "registrars manage results" on public.results;
 create policy "registrars manage results" on public.results
   for all to authenticated using (public.is_registrar()) with check (public.is_registrar());
 
+-- Every result gets a random 12-character code. It is printed with a QR code on the student's result
+-- card, so anyone can open /verify/<code> on this website and check the result is genuine.
+alter table public.results
+  add column if not exists verify_code text not null default substr(replace(gen_random_uuid()::text, '-', ''), 1, 12);
+create unique index if not exists results_verify_code on public.results (verify_code);
+
 -- Student lookup by Student ID (spaces and capitals ignored). Only published sheets are returned.
-create or replace function public.student_results(p_roll text)
-returns table (title text, session text, semester text, declared_on date, published_at timestamptz, layout jsonb, data jsonb)
+drop function if exists public.student_results(text);
+create function public.student_results(p_roll text)
+returns table (roll_no text, title text, session text, semester text, declared_on date, published_at timestamptz, layout jsonb, data jsonb, verify_code text)
 language sql
 stable
 security definer
 set search_path = public
 as $$
-  select s.title, s.session, s.semester, s.declared_on, s.published_at, s.columns, r.data
+  select r.roll_no, s.title, s.session, s.semester, s.declared_on, s.published_at, s.columns, r.data, r.verify_code
   from public.results r
   join public.result_sheets s on s.id = r.sheet_id
   where s.published
@@ -82,8 +89,24 @@ as $$
   order by s.declared_on desc nulls last, s.published_at desc;
 $$;
 
+-- Verification by the code on a printed result card. Only published results can be verified.
+create or replace function public.verify_result(p_code text)
+returns table (roll_no text, title text, session text, semester text, declared_on date, published_at timestamptz, layout jsonb, data jsonb, verify_code text)
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select r.roll_no, s.title, s.session, s.semester, s.declared_on, s.published_at, s.columns, r.data, r.verify_code
+  from public.results r
+  join public.result_sheets s on s.id = r.sheet_id
+  where s.published and r.verify_code = lower(trim(p_code));
+$$;
+
 revoke all on function public.student_results(text) from public;
 grant execute on function public.student_results(text) to anon, authenticated;
+revoke all on function public.verify_result(text) from public;
+grant execute on function public.verify_result(text) to anon, authenticated;
 revoke all on function public.is_registrar() from public;
 grant execute on function public.is_registrar() to authenticated;
 

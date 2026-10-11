@@ -6,6 +6,7 @@ import { Printer, Search } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { summaryLabel, type Layout, type ResultData } from "@/lib/results";
 import { school } from "@/data/school";
+import VerifyQr from "@/components/results/VerifyQr";
 
 export interface PublishedResult {
   title: string;
@@ -15,6 +16,8 @@ export interface PublishedResult {
   published_at: string | null;
   layout: Layout;
   data: ResultData;
+  roll_no?: string;
+  verify_code?: string;
 }
 
 const longDate = (d: string) => new Date(d.length === 10 ? d + "T00:00" : d).toLocaleDateString("en-GB", { dateStyle: "long" });
@@ -128,6 +131,12 @@ export function ResultCard({ r, studentId }: { r: PublishedResult; studentId: st
         ))}
       </dl>
 
+      {r.verify_code && (
+        <div className="mx-6 mt-6 border-t border-dashed border-ink/15 pt-6">
+          <VerifyQr code={r.verify_code} />
+        </div>
+      )}
+
       <footer className="mt-6 flex flex-wrap items-center justify-between gap-3 bg-fog px-6 py-4 text-xs text-slate">
         <span>Errors and omissions excepted. The official notification of the University of Sargodha is final.</span>
         <button
@@ -204,7 +213,7 @@ export default function StudentResults() {
       {results && results.length > 0 && (
         <div className="mt-10 space-y-10" aria-live="polite">
           {results.map((r) => (
-            <ResultCard key={r.title + r.session + r.semester} r={r} studentId={searched} />
+            <ResultCard key={r.verify_code ?? r.title + r.session + r.semester} r={r} studentId={r.roll_no ?? searched} />
           ))}
         </div>
       )}
